@@ -1,11 +1,17 @@
 #!/usr/bin/env python3
 
-# RCS (Raspberry_Control_Script)
-# @Author Lorenzo Casini 
+# RCS - Raspberry Control Script
+# @Author Lorenzo Casini aka CaSo 
 
 import io
 import os
 import time
+
+#This function create a gratefully exit when user press Ctrl + C.
+def exit_gracefully():
+    clear_terminal()
+    print("Exiting...")
+    time.sleep(2)
 
 #This function update the RPi Firmware
 def update_firmware():
@@ -38,7 +44,7 @@ def print_menu():
     print("\t1) Update Raspberry Firmware")
     print("\t2) Update Raspberry OS & SW")
     print("\t3) Check Temperature")
-    print (72 * "-")
+    print (30 * "-","Version 1.0",29 * "-")
 
 #Check the user input and call the correct function
 def main():
@@ -46,9 +52,14 @@ def main():
     while True:    
     
         print_menu()
-    
-        user_input = int(input("Enter your choice [0-3]: "))
-    
+        
+        while True:
+            try:
+                user_input = int(input("Enter your choice [0-3]: "))
+                break
+            except ValueError:
+                print("Wrong input values !")
+
         if user_input == 0: #Exit from the script
             print("\nExiting the script...")
             time.sleep(2)
@@ -69,8 +80,15 @@ def main():
             time.sleep(2)
 
         else: #Default case if some scientist insert invalid input
+            clear_terminal()
             input("Wrong options selection. Press any key to try again...")
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        exit_gracefully()
+
