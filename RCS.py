@@ -1,13 +1,16 @@
 # RCS (Raspberry_Control_Script)
 # @Author Lorenzo Casini 
-from gpiozero import CPUTemperature
+import io
 import os
 import time
 
 #This method check the current cpu temperature.
 def check_cpu_temperature():
-    cpu_temp = CPUTemperature
-    return cpu_temp.teperature
+    f = open("/sys/class/thermal_zone0/temp","r")
+    t = f.readline()
+    cpu_temp = "CPU Temp: " + t
+    return cpu_temp
+
 #This method clear the terminal
 def clear_terminal():
     os.system("clear")
