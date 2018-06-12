@@ -9,12 +9,15 @@ import time
 
 #This function update the RPi Firmware
 def update_firmware():
+    clear_terminal()
+    print("Initializing the firmware update process...")
+    time.sleep(2)
     os.system("sudo rpi-update")
 
 #This function update the RPi OS & SW
 def update_pi():
     clear_terminal()
-    print("Initializing the firmware update process...\n")
+    print("Initializing the OS & SW  update process...\n")
     time.sleep(2)
     os.system("sudo apt-get update && sudo apt-get upgrade")
 
@@ -67,9 +70,6 @@ def main():
 
         else: #Default case if some scientist insert invalid input
             input("Wrong options selection. Press any key to try again...")
-
-
-
 
 
 if __name__ == "__main__":
