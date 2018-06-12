@@ -1,52 +1,76 @@
+#!/usr/bin/env python3
+
 # RCS (Raspberry_Control_Script)
 # @Author Lorenzo Casini 
+
 import io
 import os
 import time
 
-#This method check the current cpu temperature.
-def check_cpu_temperature():
-    f = open("/sys/class/thermal/thermal_zone0/temp","r")
-    t = f.readline()
-    cpu_temp = "CPU Temp: " + t
-    return cpu_temp
+#This function update the RPi Firmware
+def update_firmware():
+    os.system("sudo rpi-update")
 
-#This method clear the terminal
+#This function update the RPi OS & SW
+def update_pi():
+    clear_terminal()
+    print("Initializing the firmware update process...\n")
+    time.sleep(2)
+    os.system("sudo apt-get update && sudo apt-get upgrade")
+
+#This function check the current cpu temperature.
+def check_cpu_temp():
+    temp = os.popen("vcgencmd measure_temp").readline()
+    return (temp.replace("temp=","CPU Temp: "))
+
+#This function clear the terminal
 def clear_terminal():
     os.system("clear")
 
-#This method print the menu.
+#This function print the menu.
 def print_menu():
-    print("Menu")
+    clear_terminal()
+    print (30 * "-", "RCS - MENU", 30 * "-")
     print("\t0) Exit")
     print("\t1) Update Raspberry Firmware")
     print("\t2) Update Raspberry OS & SW")
     print("\t3) Check Temperature")
-    user_input=int(input("Choose one option->"))
-    return user_input
+    print (72 * "-")
 
-#Init the main menu.
-clear_terminal()
-user_input = print_menu()
-
-#Check user input and call the correct function.
-if user_input == 0: #Exit from the script
-    print("Exiting the script...")
-    time.sleep(2)
-    clear_terminal()
-    exit()
-
-elif user_input == 1: #Update raspberry firmware
-    print("User Choose ->1")
-
-elif user_input == 2: #Update raspberry OS & SW
-    print("User Choose ->2")
-
-elif user_input == 3:
-    print(check_cpu_temperature())
+#Check the user input and call the correct function
+def main():
     
-else: #Default case if some scientist insert invalid input
-    print("Invalid Input, please enter a valid option.")
-    time.sleep(2)
-    clear_terminal()
-    print_menu()
+    while True:    
+    
+        print_menu()
+    
+        user_input = int(input("Enter your choice [0-3]: "))
+    
+        if user_input == 0: #Exit from the script
+            print("\nExiting the script...")
+            time.sleep(2)
+            clear_terminal()
+            exit()
+
+        elif user_input == 1: #Update raspberry firmware
+            update_firmware()
+            time.sleep(3)
+
+        elif user_input == 2: #Update raspberry OS & SW
+            update_pi()
+            time.sleep(3)
+
+        elif user_input == 3: #Check raspberry temperature
+            clear_terminal()
+            print(check_cpu_temp())
+            time.sleep(2)
+
+        else: #Default case if some scientist insert invalid input
+            input("Wrong options selection. Press any key to try again...")
+
+
+
+
+
+if __name__ == "__main__":
+    main()
