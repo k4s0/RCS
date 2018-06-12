@@ -43,7 +43,7 @@ elif user_input == 2: #Update raspberry OS & SW
     print("User Choose ->2")
 
 elif user_input == 3:
-    check_cpu_temperature()
+    print(check_cpu_temperature())
     
 else: #Default case if some scientist insert invalid input
     print("Invalid Input, please enter a valid option.")
