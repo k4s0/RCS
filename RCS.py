@@ -6,7 +6,7 @@ import time
 
 #This method check the current cpu temperature.
 def check_cpu_temperature():
-    f = open("/sys/class/thermal_zone0/temp","r")
+    f = open("/sys/class/thermal/thermal_zone0/temp","r")
     t = f.readline()
     cpu_temp = "CPU Temp: " + t
     return cpu_temp
