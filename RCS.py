@@ -58,11 +58,9 @@ def main():
                 user_input = int(input("Enter your choice [0-3]: "))
                 break
             except ValueError:
-                print("Wrong input values !")
+                print_menu()
 
         if user_input == 0: #Exit from the script
-            print("\nExiting the script...")
-            time.sleep(2)
             clear_terminal()
             exit()
 
@@ -80,7 +78,6 @@ def main():
             time.sleep(2)
 
         else: #Default case if some scientist insert invalid input
-            clear_terminal()
             input("Wrong options selection. Press any key to try again...")
 
 
