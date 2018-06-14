@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 
 # RCS - Raspberry Control Script
-# @Author Lorenzo Casini aka CaSo 
+# @Author Lorenzo Casini aka CaSo
 
 import io
 import os
 import time
+
+#This fucntion check te disk usage on a RPiself.
+def check_disk():
+    clear_terminal()
+    os.system("df -h")
 
 #This function create a gratefully exit when user press Ctrl + C.
 def exit_gracefully():
@@ -39,20 +44,21 @@ def clear_terminal():
 #This function print the menu.
 def print_menu():
     clear_terminal()
-    print (30 * "-", "RCS - MENU", 30 * "-")
+    print(30 * "-", "RCS - MENU", 30 * "-")
     print("\t0) Exit")
     print("\t1) Update Raspberry Firmware")
     print("\t2) Update Raspberry OS & SW")
     print("\t3) Check Temperature")
-    print (30 * "-","Version 1.0",29 * "-")
+    print("\t4) Check Disk Usage")
+    print(30 * "-","Version 1.0",29 * "-")
 
 #Check the user input and call the correct function
 def main():
-    
-    while True:    
-    
+
+    while True:
+
         print_menu()
-        
+
         while True:
             try:
                 user_input = int(input("Enter your choice [0-3]: "))
@@ -77,6 +83,10 @@ def main():
             print(check_cpu_temp())
             time.sleep(2)
 
+        elif user_input == 4:
+            check_disk()
+            time.sleep(3)
+
         else: #Default case if some scientist insert invalid input
             input("Wrong options selection. Press any key to try again...")
 
@@ -88,4 +98,3 @@ if __name__ == "__main__":
         pass
     finally:
         exit_gracefully()
-
