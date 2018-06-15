@@ -11,6 +11,7 @@ import time
 def check_disk():
     clear_terminal()
     os.system("df -h")
+    time.sleep(5)
 
 #This function create a gratefully exit when user press Ctrl + C.
 def exit_gracefully():
@@ -24,6 +25,10 @@ def update_firmware():
     print("Initializing the firmware update process...")
     time.sleep(2)
     os.system("sudo rpi-update")
+    time.sleep(5)
+    clear_terminal()
+    print("If you update your RPi firmware , please reboot the system !!!")
+    time.sleep(5)
 
 #This function update the RPi OS & SW
 def update_pi():
@@ -31,9 +36,11 @@ def update_pi():
     print("Initializing the OS & SW  update process...\n")
     time.sleep(2)
     os.system("sudo apt-get update && sudo apt-get upgrade")
+    time.sleep(5)
 
 #This function check the current cpu temperature.
 def check_cpu_temp():
+    clear_terminal()
     temp = os.popen("vcgencmd measure_temp").readline()
     return (temp.replace("temp=","CPU Temp: "))
 
@@ -67,25 +74,20 @@ def main():
                 print_menu()
 
         if user_input == 0: #Exit from the script
-            clear_terminal()
             exit()
 
         elif user_input == 1: #Update raspberry firmware
             update_firmware()
-            time.sleep(3)
 
         elif user_input == 2: #Update raspberry OS & SW
             update_pi()
-            time.sleep(3)
 
         elif user_input == 3: #Check raspberry temperature
-            clear_terminal()
             print(check_cpu_temp())
-            time.sleep(2)
+            time.sleep(3)
 
         elif user_input == 4:
             check_disk()
-            time.sleep(3)
 
         else: #Default case if some scientist insert invalid input
             input("Wrong options selection. Press any key to try again...")
